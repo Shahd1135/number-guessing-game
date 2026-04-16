@@ -15,7 +15,7 @@ function getPlayerGuess() {
         input = input.trim();
 
         if (!/^\d+$/.test(input)) {
-            console.warn("Invalid input! Enter ONLY a single number (no spaces or letters).");
+            console.warn("%cInvalid input! Enter ONLY a number.", "color: deepskyblue;");
             continue;
         }
 
@@ -25,7 +25,7 @@ function getPlayerGuess() {
             return guess;
         }
 
-        console.warn("Number must be between 1 and 100.");
+        console.warn("%cNumber must be between 1 and 100.", "color: deepskyblue;");
     }
 }
 
@@ -41,16 +41,16 @@ function game() {
     let attempts = 0;
     let hasWon = false;
 
-    console.log("%c🤖 EVIL AI CHALLENGE INITIALIZED", "color: purple; font-weight: bold; font-size: 16px;");
-    console.log("%c-----------------------------------------", "color: purple;");
-    console.log("I have chosen a number between 1 and 100.");
-    console.log("You have 10 attempts to defeat me. Good luck 😈");
+    console.log("%c 👾 EVIL AI CHALLENGE INITIALIZED", "color: violet; font-weight: bold; font-size: 16px;");
+    console.log("%c-----------------------------------------", "color: violet;");
+    console.log("%cI have chosen a number between 1 and 100.", "color: cyan;");
+    console.log("%cYou have 10 attempts to defeat me. Good luck 😈", "color: cyan; font-weight: bold;");
 
     while (attempts < maxAttempts) {
         const playerGuess = getPlayerGuess();
 
         if (playerGuess === null) {
-            console.log("%c💀 Game forfeited. The Evil AI wins by default!", "color: red;");
+            console.log("%c𓆩☠︎︎𓆪 Game forfeited. The Evil AI wins by default!", "color: hotpink;");
             return;
         }
 
@@ -65,26 +65,33 @@ function game() {
             let remaining = maxAttempts - attempts;
             let potentialScore = remaining * 10;
 
-            console.log(`Attempt ${attempts}: ${playerGuess} → ${result}`);
-            console.log(`Attempts left: ${remaining} | Potential score: ${potentialScore}`);
+            console.log(
+                `%cAttempt ${attempts}: %c${playerGuess} → ${result}`,
+                "color: dodgerblue;",
+                "color: deepskyblue; font-weight: bold;"
+            );
+
+            console.log("%cAttempts left: " + remaining, "color: mediumspringgreen;");
+            console.log("%cPotential score: " + potentialScore, "color: lightgreen;");
         }
     }
 
     if (hasWon) {
         const score = (maxAttempts - attempts + 1) * 10;
 
-        console.log("%cVICTORY!", "color: green; font-size: 20px; font-weight: bold;");
-        console.log(`You guessed the number in ${attempts} attempts!`);
-        console.log(`🏆 Your Score: ${score}`);
-    } 
-
-    else {
-        console.log("%c💀 DEFEAT!", "color: red; font-size: 20px; font-weight: bold;");
-        console.log("The Evil AI prevails...");
-        console.log(`🔢 The correct number was: ${correctNumber}`);
+        console.log("%cVICTORY!", "color: gold; font-size: 20px; font-weight: bold;");
+        console.log(`%cYou guessed the number in ${attempts} attempts!`, "color: deepskyblue;");
+        console.log(`%c🏆 Your Score: ${score}`, "color: gold;");
+    } else {
+        console.log("%c𓆩☠︎︎𓆪 DEFEAT!", "color: red; font-size: 20px; font-weight: bold;");
+        console.log("%cThe Evil AI prevails...", "color: red;");
+        console.log(`%cThe correct number was: ${correctNumber}`, "color: orange;");
     }
 
-    console.log(`📊 Total attempts used: ${attempts}`);
+    console.log(`%cTotal attempts used: ${attempts}`, "color: orange;");
 }
 
-game();
+window.game = game;
+
+console.log("%c ⚔⊹ ࣪ ˖ Evil AI Challenge Loaded!", "color: violet; font-weight: bold; font-size: 16px;");
+console.log("%cType game() in the console to start playing.", "color: cyan;");
