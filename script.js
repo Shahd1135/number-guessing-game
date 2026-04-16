@@ -1,105 +1,90 @@
-// ===============================
-// 🎯 Number Guessing Game
-// Evil AI Challenge
-// ===============================
-
-// Function to generate a random number between 1 and 100
 function generateRandomNumber() {
     return Math.floor(Math.random() * 100) + 1;
 }
 
-// Function to safely get player input
 function getPlayerGuess() {
     let guess;
 
     while (true) {
-        let input = prompt("🎯 Enter a number between 1 and 100 (or type 'exit' to quit):");
+        let input = prompt("🎯 Enter a number between 1 and 100 (Cancel to exit):");
 
-        // If user presses Cancel
         if (input === null) {
-            console.log("⚠️ Input canceled. Please enter a number to continue.");
-            continue;
-        }
-
-        // Remove extra spaces
-        input = input.trim();
-
-        // Optional exit feature
-        if (input.toLowerCase() === "exit") {
-            console.log("👋 You exited the game.");
             return null;
         }
 
-        // Convert to number
+        input = input.trim();
+
+        if (!/^\d+$/.test(input)) {
+            console.warn("Invalid input! Enter ONLY a single number (no spaces or letters).");
+            continue;
+        }
+
         guess = Number(input);
 
-        // Validate input
-        if (!isNaN(guess) && guess >= 1 && guess <= 100) {
+        if (guess >= 1 && guess <= 100) {
             return guess;
         }
 
-        console.log("❌ Invalid input! Please enter a valid number between 1 and 100.");
+        console.warn("❌ Number must be between 1 and 100.");
     }
 }
 
-// Function to check the guess
 function checkGuess(guess, correctNumber) {
-    if (guess < correctNumber) {
-        return "too low";
-    } else if (guess > correctNumber) {
-        return "too high";
-    } else {
-        return "correct";
-    }
+    if (guess < correctNumber) return "Too low!";
+    if (guess > correctNumber) return "Too high!";
+    return "Correct";
 }
 
-// Main game function
 function game() {
     const correctNumber = generateRandomNumber();
-    let attempts = 0;
     const maxAttempts = 10;
-    let guessedCorrectly = false;
+    let attempts = 0;
+    let hasWon = false;
 
-    console.log("=================================");
-    console.log("🤖 Evil AI Challenge Initialized...");
-    console.log("=================================");
-    console.log("I have selected a number between 1 and 100.");
+    console.log("%c🤖 EVIL AI CHALLENGE INITIALIZED", "color: purple; font-weight: bold; font-size: 16px;");
+    console.log("%c-----------------------------------------", "color: purple;");
+    console.log("I have chosen a number between 1 and 100.");
     console.log("You have 10 attempts to defeat me. Good luck 😈");
 
     while (attempts < maxAttempts) {
-        let playerGuess = getPlayerGuess();
+        const playerGuess = getPlayerGuess();
 
-        // Handle exit
         if (playerGuess === null) {
-            console.log("💀 Game terminated early.");
+            console.log("%c💀 Game forfeited. The Evil AI wins by default!", "color: red;");
             return;
         }
 
         attempts++;
 
-        let result = checkGuess(playerGuess, correctNumber);
+        const result = checkGuess(playerGuess, correctNumber);
 
-        if (result === "correct") {
-            let score = (maxAttempts - attempts + 1) * 10;
-
-            console.log("🎉 YOU DEFEATED THE EVIL AI!");
-            console.log(`🏆 Your Score: ${score}`);
-            guessedCorrectly = true;
+        if (result === "Correct") {
+            hasWon = true;
             break;
         } else {
-            let potentialScore = (maxAttempts - attempts) * 10;
-            console.log(`📉 Your guess is ${result}. Attempts left: ${maxAttempts - attempts}`);
-            console.log(`💡 Current possible score if you win next: ${potentialScore}`);
+            let remaining = maxAttempts - attempts;
+            let potentialScore = remaining * 10;
+
+            console.log(`📉 Attempt ${attempts}: ${playerGuess} → ${result}`);
+            console.log(`💡 Attempts left: ${remaining} | Potential score: ${potentialScore}`);
         }
     }
 
-    if (!guessedCorrectly) {
-        console.log("💀 You lost! The Evil AI wins...");
+    if (hasWon) {
+        const score = (maxAttempts - attempts + 1) * 10;
+
+        console.log("%cVICTORY!", "color: green; font-size: 20px; font-weight: bold;");
+        console.log(`You guessed the number in ${attempts} attempts!`);
+        console.log(`🏆 Your Score: ${score}`);
+    } 
+
+    else {
+        console.log("%c💀 DEFEAT!", "color: red; font-size: 20px; font-weight: bold;");
+        console.log("The Evil AI prevails...");
         console.log(`🔢 The correct number was: ${correctNumber}`);
     }
 
     console.log(`📊 Total attempts used: ${attempts}`);
 }
 
-// Start the game automatically
 game();
