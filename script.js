@@ -6,7 +6,7 @@ function getPlayerGuess() {
     let guess;
 
     while (true) {
-        let input = prompt("🎯 Enter a number between 1 and 100 (Cancel to exit):");
+        let input = prompt("Enter a number between 1 and 100 (Cancel to exit):");
 
         if (input === null) {
             return null;
@@ -25,7 +25,7 @@ function getPlayerGuess() {
             return guess;
         }
 
-        console.warn("❌ Number must be between 1 and 100.");
+        console.warn("Number must be between 1 and 100.");
     }
 }
 
@@ -65,8 +65,8 @@ function game() {
             let remaining = maxAttempts - attempts;
             let potentialScore = remaining * 10;
 
-            console.log(`📉 Attempt ${attempts}: ${playerGuess} → ${result}`);
-            console.log(`💡 Attempts left: ${remaining} | Potential score: ${potentialScore}`);
+            console.log(`Attempt ${attempts}: ${playerGuess} → ${result}`);
+            console.log(`Attempts left: ${remaining} | Potential score: ${potentialScore}`);
         }
     }
 
