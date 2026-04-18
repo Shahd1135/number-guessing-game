@@ -95,7 +95,6 @@ function game() {
 
     console.log(`%cTotal attempts used: ${attempts}`, "color: orange;");
 
-    // Play again logic
     const playAgain = confirm("The challenge has ended. Do you dare to play again?");
     if (playAgain) {
         console.clear();
