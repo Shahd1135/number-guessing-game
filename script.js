@@ -1,6 +1,8 @@
+
 function generateRandomNumber() {
     return Math.floor(Math.random() * 100) + 1;
 }
+
 
 function getPlayerGuess() {
     let guess;
@@ -21,6 +23,7 @@ function getPlayerGuess() {
 
         guess = Number(input);
 
+      
         if (guess >= 1 && guess <= 100) {
             return guess;
         }
@@ -29,11 +32,13 @@ function getPlayerGuess() {
     }
 }
 
+
 function checkGuess(guess, correctNumber) {
     if (guess < correctNumber) return "Too low!";
     if (guess > correctNumber) return "Too high!";
     return "Correct";
 }
+
 
 function game() {
     const correctNumber = generateRandomNumber();
@@ -89,7 +94,17 @@ function game() {
     }
 
     console.log(`%cTotal attempts used: ${attempts}`, "color: orange;");
+
+    // Play again logic
+    const playAgain = confirm("The challenge has ended. Do you dare to play again?");
+    if (playAgain) {
+        console.clear();
+        game();
+    } else {
+        console.log("%cEXITING... ROBO-333 will be waiting for your return.", "color: violet; font-weight: bold;");
+    }
 }
+
 
 window.game = game;
 
