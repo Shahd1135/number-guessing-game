@@ -1,8 +1,6 @@
-
 function generateRandomNumber() {
     return Math.floor(Math.random() * 100) + 1;
 }
-
 
 function getPlayerGuess() {
     let guess;
@@ -11,7 +9,12 @@ function getPlayerGuess() {
         let input = prompt("Enter a number between 1 and 100 (Cancel to exit):");
 
         if (input === null) {
-            return null;
+            const confirmExit = confirm("Are you sure you want to exit the game?");
+            if (confirmExit) {
+                return null;
+            } else {
+                continue; 
+            }
         }
 
         input = input.trim();
@@ -23,7 +26,6 @@ function getPlayerGuess() {
 
         guess = Number(input);
 
-      
         if (guess >= 1 && guess <= 100) {
             return guess;
         }
@@ -32,13 +34,11 @@ function getPlayerGuess() {
     }
 }
 
-
 function checkGuess(guess, correctNumber) {
     if (guess < correctNumber) return "Too low!";
     if (guess > correctNumber) return "Too high!";
     return "Correct";
 }
-
 
 function game() {
     const correctNumber = generateRandomNumber();
@@ -104,6 +104,19 @@ function game() {
     }
 }
 
+alert(
+`Welcome to the Evil AI Challenge 👾
+
+To play:
+1. Open your browser console:
+   - Windows: Ctrl + Shift + J
+   - Mac: Cmd + Option + J
+
+2. Type: game()
+3. Press Enter
+
+Good luck 😈`
+);
 
 window.game = game;
 
